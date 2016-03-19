@@ -70,3 +70,20 @@ void CFlowView::OnSize(UINT nType, int cx, int cy)
 	// TODO: 在此处添加消息处理程序代码
 	AdjustLayout();
 }
+
+
+void CFlowView::InsertFlow(LPCTSTR flowName, LPCTSTR info)
+{
+	POSITION pos = dlg.m_ProcList.GetFirstSelectedItemPosition();
+	int nItem = dlg.m_ProcList.GetNextSelectedItem(pos);
+	if (nItem == -1)
+	{
+		dlg.m_ProcList.InsertItem(dlg.m_ProcList.GetItemCount(), flowName);
+		dlg.m_ProcList.SetItemText(dlg.m_ProcList.GetItemCount() - 1, 1, info);
+	}
+	else
+	{
+		dlg.m_ProcList.InsertItem(nItem, flowName);
+		dlg.m_ProcList.SetItemText(nItem, 1, info);
+	}
+}

@@ -23,6 +23,5 @@ public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	CTreeCtrl m_tree;
 	virtual BOOL OnInitDialog();
-	afx_msg void OnNMClickTreeTools(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclkTreeTools(NMHDR *pNMHDR, LRESULT *pResult);
 };

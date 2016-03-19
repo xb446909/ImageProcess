@@ -19,5 +19,6 @@ protected:
 	CFlowViewWnd dlg;
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	void InsertFlow(LPCTSTR flowName, LPCTSTR info);
 };
 

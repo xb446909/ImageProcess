@@ -6,6 +6,7 @@
 #include "ToolBoxWnd.h"
 #include "afxdialogex.h"
 #include "OutputWnd.h"
+#include "FlowView.h"
 
 
 // CToolBoxWnd 对话框
@@ -31,7 +32,6 @@ void CToolBoxWnd::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CToolBoxWnd, CDialogEx)
 	ON_WM_SIZE()
-	ON_NOTIFY(NM_CLICK, IDC_TREE_TOOLS, &CToolBoxWnd::OnNMClickTreeTools)
 	ON_NOTIFY(NM_DBLCLK, IDC_TREE_TOOLS, &CToolBoxWnd::OnNMDblclkTreeTools)
 END_MESSAGE_MAP()
 
@@ -69,35 +69,16 @@ BOOL CToolBoxWnd::OnInitDialog()
 }
 
 
-void CToolBoxWnd::OnNMClickTreeTools(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	// TODO: 在此添加控件通知处理程序代码
-	//POINT pt;
-	//HTREEITEM hItem;
-	//GetCursorPos(&pt);
-	//hItem = m_tree.HitTest(pt);
-	//hItem = m_tree.GetSelectedItem();
-	//m_tree.SelectItem(hItem);
-	//MessageBox(m_tree.GetItemText(hItem));
-
-	//COutputWnd::Get()->OutputString(m_tree.GetItemText(hItem));
-
-	*pResult = 0;
-}
-
-
 void CToolBoxWnd::OnNMDblclkTreeTools(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: 在此添加控件通知处理程序代码
 	HTREEITEM hItem;
 	hItem = m_tree.GetSelectedItem();
-	if (m_tree.GetParentItem(hItem) == NULL)
+	
+	if ((m_tree.GetChildItem(hItem) == NULL) && (m_tree.GetParentItem(hItem) != NULL))
 	{
-		COutputWnd::Get()->OutputString(L"ROOT Item");
+		CFlowView::Get()->InsertFlow(m_tree.GetItemText(hItem), m_tree.GetItemText(hItem));
 	}
-	else
-	{
-		COutputWnd::Get()->OutputString(m_tree.GetItemText(hItem));
-	}
+
 	*pResult = 0;
 }

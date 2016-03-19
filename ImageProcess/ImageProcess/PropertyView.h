@@ -11,10 +11,10 @@ public:
 	CPropertyView();
 	virtual ~CPropertyView();
 
-	static CPropertyView* pInst;
 	static CPropertyView* Get();
 
 protected:
+	static CPropertyView* pInst;
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

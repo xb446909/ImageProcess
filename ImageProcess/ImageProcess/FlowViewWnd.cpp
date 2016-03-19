@@ -5,6 +5,7 @@
 #include "ImageProcess.h"
 #include "FlowViewWnd.h"
 #include "afxdialogex.h"
+#include "OutputWnd.h"
 
 
 // CFlowViewWnd 对话框
@@ -80,13 +81,6 @@ BOOL CFlowViewWnd::OnInitDialog()
 	m_ProcList.SetExtendedStyle(m_ProcList.GetExtendedStyle() | LVS_EX_ONECLICKACTIVATE | LVS_EX_FULLROWSELECT);
 	m_ProcList.InsertColumn(0, L"流程名", 0, 80);
 	m_ProcList.InsertColumn(1, L"说明", 0, 300);
-	for (i = 0; i < 10; i++)
-	{
-		str.Format(L"%d", i + 1);
-		m_ProcList.InsertItem(i, str);
-		m_ProcList.SetItemText(i, 1, str + "GOOD");
-	}
-
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
@@ -99,7 +93,7 @@ void CFlowViewWnd::OnNMClickListProc(NMHDR *pNMHDR, LRESULT *pResult)
 	// TODO: 在此添加控件通知处理程序代码
 	CString str;
 	str.Format(L"单击了Item:%d", pNMItemActivate->iItem);
-	m_ProcList.InsertItem(11, str);
+	COutputWnd::Get()->OutputString(str);
 	*pResult = 0;
 }
 
