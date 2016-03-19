@@ -7,6 +7,7 @@
 #include "FlowView.h"
 #include "OutputWnd.h"
 #include "ToolBox.h"
+#include "PropertyView.h"
 
 class CMainFrame : public CMDIFrameWndEx
 {

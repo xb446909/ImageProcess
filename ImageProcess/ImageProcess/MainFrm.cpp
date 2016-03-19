@@ -123,6 +123,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CToolBox::Get()->EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(CToolBox::Get());
 
+	CPropertyView::Get()->EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(CPropertyView::Get());
+
 
 	// 启用 Visual Studio 2005 样式停靠窗口行为
 	CDockingManager::SetDockingMode(DT_SMART);
@@ -189,6 +192,12 @@ BOOL CMainFrame::CreateDockingWindows()
 	if (!CToolBox::Get()->Create(L"工具箱", this, CRect(0, 0, 100, 100), TRUE, ID_VIEW_TOOLBOX, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
 	{
 		TRACE0("未能创建工具箱窗口\n");
+		return FALSE; // 未能创建
+	}
+
+	if (!CPropertyView::Get()->Create(L"属性", this, CRect(0, 0, 100, 100), TRUE, ID_VIEW_PROPERTY, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("未能创建属性窗口\n");
 		return FALSE; // 未能创建
 	}
 
