@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "FlowView.h"
 #include "Resource.h"
-
+#include "Strsafe.h"
 
 CFlowView::CFlowView(void)
 {
@@ -76,14 +76,17 @@ void CFlowView::InsertFlow(LPCTSTR flowName, LPCTSTR info)
 {
 	POSITION pos = dlg.m_ProcList.GetFirstSelectedItemPosition();
 	int nItem = dlg.m_ProcList.GetNextSelectedItem(pos);
+
+	pFlowItem pflow = new FlowItem;
+	StringCbCopy(pflow->flowName, 64, flowName);
+	StringCbCopy(pflow->info, 1024, info);
 	if (nItem == -1)
 	{
-		dlg.m_ProcList.InsertItem(dlg.m_ProcList.GetItemCount(), flowName);
-		dlg.m_ProcList.SetItemText(dlg.m_ProcList.GetItemCount() - 1, 1, info);
+		dlg.vec_flow.push_back(pflow);
 	}
 	else
 	{
-		dlg.m_ProcList.InsertItem(nItem, flowName);
-		dlg.m_ProcList.SetItemText(nItem, 1, info);
+		dlg.vec_flow.insert(dlg.vec_flow.begin() + nItem, pflow);
 	}
+	dlg.UpdateList();
 }

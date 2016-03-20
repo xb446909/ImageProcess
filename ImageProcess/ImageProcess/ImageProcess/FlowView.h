@@ -1,6 +1,7 @@
 #pragma once
 #include "afxdockablepane.h"
 #include "FlowViewWnd.h"
+
 class CFlowView :
 	public CDockablePane
 {

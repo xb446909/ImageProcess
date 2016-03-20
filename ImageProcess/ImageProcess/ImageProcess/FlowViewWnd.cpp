@@ -137,5 +137,19 @@ void CFlowViewWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint)
 void CFlowViewWnd::OnDelete()
 {
 	// TODO: 在此添加命令处理程序代码
-	m_ProcList.DeleteItem(m_ProcList.GetNextItem(-1, LVIS_SELECTED));
+	vec_flow.erase(vec_flow.begin() + m_ProcList.GetNextItem(-1, LVIS_SELECTED));
+	UpdateList();
+}
+
+void CFlowViewWnd::UpdateList()
+{
+	std::vector<pFlowItem>::iterator it;
+	m_ProcList.SetRedraw(FALSE);
+	m_ProcList.DeleteAllItems();
+	for (it = vec_flow.begin(); it != vec_flow.end(); it++)
+	{
+		m_ProcList.InsertItem(m_ProcList.GetItemCount(), reinterpret_cast<pFlowItem>(*it)->flowName);
+		m_ProcList.SetItemText(m_ProcList.GetItemCount() - 1, 1, reinterpret_cast<pFlowItem>(*it)->info);
+	}
+	m_ProcList.SetRedraw(TRUE);
 }

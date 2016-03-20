@@ -3,7 +3,21 @@
 #include "resource.h"
 #include "afxwin.h"
 #include "afxcmn.h"
+#include <vector>
 // CFlowViewWnd ¶Ô»°¿ò
+
+typedef struct flow_tag
+{
+
+#ifdef UNICODE
+	WCHAR flowName[64];
+	WCHAR info[1024];
+#else
+	CHAR flowName[64];
+	CHAR info[1024];
+#endif
+
+}FlowItem, *pFlowItem;
 
 class CFlowViewWnd : public CDialogEx
 {
@@ -29,4 +43,8 @@ public:
 	afx_msg void OnNMRClickListProc(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
 	afx_msg void OnDelete();
+	void UpdateList();
+
+	std::vector<pFlowItem> vec_flow;
+
 };
