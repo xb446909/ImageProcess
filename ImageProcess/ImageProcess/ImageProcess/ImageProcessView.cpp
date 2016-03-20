@@ -52,7 +52,7 @@ BOOL CImageProcessView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CImageProcessView 绘制
 
-void CImageProcessView::OnDraw(CDC* /*pDC*/)
+void CImageProcessView::OnDraw(CDC* pDC)
 {
 	CImageProcessDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
@@ -60,6 +60,8 @@ void CImageProcessView::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO: 在此处为本机数据添加绘制代码
+	pDC->TextOutW(100, 100, pDoc->GetPathName());
+	
 }
 
 

@@ -10,6 +10,7 @@
 #endif
 
 #include "ImageProcessDoc.h"
+#include "OutputWnd.h"
 
 #include <propkey.h>
 
@@ -36,19 +37,6 @@ CImageProcessDoc::CImageProcessDoc()
 CImageProcessDoc::~CImageProcessDoc()
 {
 }
-
-BOOL CImageProcessDoc::OnNewDocument()
-{
-	if (!CDocument::OnNewDocument())
-		return FALSE;
-
-	// TODO: 在此添加重新初始化代码
-	// (SDI 文档将重用该文档)
-
-	return TRUE;
-}
-
-
 
 
 // CImageProcessDoc 序列化

@@ -20,7 +20,6 @@ public:
 
 // ÖØÐ´
 public:
-	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 #ifdef SHARED_HANDLERS
 	virtual void InitializeSearchContent();
