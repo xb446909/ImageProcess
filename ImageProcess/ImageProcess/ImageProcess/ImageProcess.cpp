@@ -22,7 +22,6 @@
 BEGIN_MESSAGE_MAP(CImageProcessApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, &CImageProcessApp::OnAppAbout)
 	// 基于文件的标准文档命令
-	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
 	// 标准打印设置命令
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
