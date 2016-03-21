@@ -3,6 +3,7 @@
 //
 
 #include "stdafx.h"
+#include "highgui.h"
 // SHARED_HANDLERS 可以在实现预览、缩略图和搜索筛选器句柄的
 // ATL 项目中进行定义，并允许与该项目共享文档代码。
 #ifndef SHARED_HANDLERS
@@ -50,6 +51,7 @@ void CImageProcessDoc::Serialize(CArchive& ar)
 	else
 	{
 		// TODO: 在此添加加载代码
+		pSrc = cvLoadImage(CW2A(ar.GetFile()->GetFilePath()));
 	}
 }
 

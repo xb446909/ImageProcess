@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "cv.h"
 
 class CImageProcessView : public CView
 {
@@ -26,6 +26,7 @@ protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+	float DrawToCDC(IplImage* img, CDC* pDC);
 
 // 实现
 public:
@@ -43,6 +44,7 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
+public:
 };
 
 #ifndef _DEBUG  // ImageProcessView.cpp 中的调试版本

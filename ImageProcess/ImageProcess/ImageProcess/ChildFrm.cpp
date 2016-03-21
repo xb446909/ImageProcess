@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include "ImageProcess.h"
+#include "ImageProcessDoc.h"
 
 #include "ChildFrm.h"
 
@@ -16,6 +17,7 @@
 IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWndEx)
 
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWndEx)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 // CChildFrame 构造/析构
@@ -54,3 +56,12 @@ void CChildFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 // CChildFrame 消息处理程序
+
+
+void CChildFrame::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	CImageProcessDoc* pDoc = (CImageProcessDoc*)GetActiveView()->GetDocument();
+	cvReleaseImage(&pDoc->pSrc);
+	CMDIChildWndEx::OnClose();
+}

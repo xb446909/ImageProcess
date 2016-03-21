@@ -4,7 +4,7 @@
 
 
 #pragma once
-
+#include "cv.h"
 
 class CImageProcessDoc : public CDocument
 {
@@ -29,6 +29,9 @@ public:
 // й╣ож
 public:
 	virtual ~CImageProcessDoc();
+
+	IplImage* pSrc = NULL;
+
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;

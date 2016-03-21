@@ -60,7 +60,7 @@ void CImageProcessView::OnDraw(CDC* pDC)
 		return;
 
 	// TODO: 在此处为本机数据添加绘制代码
-	pDC->TextOutW(100, 100, pDoc->GetPathName());
+	DrawToCDC(pDoc->pSrc, pDC);
 	
 }
 
@@ -127,3 +127,46 @@ CImageProcessDoc* CImageProcessView::GetDocument() const // 非调试版本是内联的
 
 
 // CImageProcessView 消息处理程序
+float CImageProcessView::DrawToCDC(IplImage* img, CDC* pDC)
+{
+	CRect rect;
+	CImage bkgound;
+	float ratio;
+	BITMAPINFO bmi;
+	BITMAPINFOHEADER* bmih = &(bmi.bmiHeader);
+	memset(bmih, 0, sizeof(*bmih));
+	IplImage* pImg = cvCreateImage(cvSize(img->width, img->height), IPL_DEPTH_8U, 3);
+
+	if ((img->nChannels * img->depth) == 8)
+	{
+		cvCvtColor(img, pImg, CV_GRAY2RGB);
+	}
+
+	if ((img->nChannels * img->depth) == 24)
+	{
+		cvCopy(img, pImg);
+	}
+	if ((img->nChannels * img->depth) > 24)
+	{
+		AfxMessageBox(L"请输入8BPP或24BPP的图像！");
+		return 0;
+	}
+
+	bmih->biSize = sizeof(BITMAPINFOHEADER);
+	bmih->biWidth = pImg->width;
+	bmih->biHeight = -abs(pImg->height);
+	bmih->biPlanes = 1;
+	bmih->biBitCount = 24;
+	bmih->biCompression = BI_RGB;
+
+	pDC->GetWindow()->GetWindowRect(&rect);
+	bkgound.Create(rect.Width(), rect.Height(), 24);
+	bkgound.Draw(pDC->GetSafeHdc(), 0, 0, rect.Width(), rect.Height());
+	ratio = MIN(((float)rect.Height() / pImg->height), ((float)rect.Width() / pImg->width));
+	pDC->SetStretchBltMode(HALFTONE);
+	::StretchDIBits(pDC->GetSafeHdc(), (int)((rect.Width() - pImg->width*ratio) / 2), (int)((rect.Height() - pImg->height*ratio) / 2),
+		(int)((pImg->width)*ratio), (int)((pImg->height)*ratio), 0, 0, pImg->width, pImg->height, pImg->imageData, &bmi, DIB_RGB_COLORS, SRCCOPY);
+	cvReleaseImage(&pImg);
+
+	return ratio;
+}
