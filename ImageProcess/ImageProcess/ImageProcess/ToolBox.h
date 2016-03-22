@@ -3,6 +3,7 @@
 
 // CToolBox
 #include "ToolBoxWnd.h"
+#include "FlowViewWnd.h"
 
 class CToolBox : public CDockablePane
 {
@@ -22,6 +23,8 @@ public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
+
+	std::vector<pFlowItem> flowList;
 };
 
 

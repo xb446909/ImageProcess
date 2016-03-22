@@ -80,10 +80,5 @@ void CToolBoxWnd::OnNMDblclkTreeTools(NMHDR *pNMHDR, LRESULT *pResult)
 		CFlowView::Get()->InsertFlow(m_tree.GetItemText(hItem), m_tree.GetItemText(hItem));
 	}
 
-	//AfxGetApp()->m_pMainWnd->OnClose();
-
-
-	//AfxGetApp()->OpenDocumentFile(m_tree.GetItemText(hItem));
-
 	*pResult = 0;
 }

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "ImageProcess.h"
 #include "ToolBox.h"
+#include "OutputWnd.h"
 
 
 // CToolBox
@@ -12,7 +13,23 @@ IMPLEMENT_DYNAMIC(CToolBox, CDockablePane)
 
 CToolBox::CToolBox()
 {
+	WIN32_FIND_DATA FindFileData;
+	pFlowItem pItem = new FlowItem;
+	HANDLE hFind = ::FindFirstFile(L".\\Extensions\\*.dll", &FindFileData);
+	if (INVALID_HANDLE_VALUE == hFind)
+	{
+		return;
+	}
 
+	while (TRUE)
+	{
+		if (!(FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+		{
+			AfxMessageBox(FindFileData.cFileName);
+		}
+		if (!FindNextFile(hFind, &FindFileData))    break;
+	}
+	FindClose(hFind);
 }
 
 CToolBox::~CToolBox()
