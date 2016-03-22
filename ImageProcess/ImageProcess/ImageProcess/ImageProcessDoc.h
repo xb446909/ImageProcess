@@ -20,7 +20,6 @@ public:
 
 // 重写
 public:
-	virtual void Serialize(CArchive& ar);
 #ifdef SHARED_HANDLERS
 	virtual void InitializeSearchContent();
 	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
@@ -31,6 +30,7 @@ public:
 	virtual ~CImageProcessDoc();
 
 	IplImage* pSrc = NULL;
+	IplImage* pDst = NULL;
 
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -47,4 +47,7 @@ protected:
 	// 用于为搜索处理程序设置搜索内容的 Helper 函数
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+public:
+	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
+	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 };

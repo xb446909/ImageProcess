@@ -63,5 +63,6 @@ void CChildFrame::OnClose()
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CImageProcessDoc* pDoc = (CImageProcessDoc*)GetActiveView()->GetDocument();
 	cvReleaseImage(&pDoc->pSrc);
+	cvReleaseImage(&pDoc->pDst);
 	CMDIChildWndEx::OnClose();
 }

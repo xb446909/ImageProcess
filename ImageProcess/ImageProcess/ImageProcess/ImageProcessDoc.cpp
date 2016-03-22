@@ -42,19 +42,6 @@ CImageProcessDoc::~CImageProcessDoc()
 
 // CImageProcessDoc 序列化
 
-void CImageProcessDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		// TODO: 在此添加存储代码
-	}
-	else
-	{
-		// TODO: 在此添加加载代码
-		pSrc = cvLoadImage(CW2A(ar.GetFile()->GetFilePath()));
-	}
-}
-
 #ifdef SHARED_HANDLERS
 
 // 缩略图的支持
@@ -125,3 +112,26 @@ void CImageProcessDoc::Dump(CDumpContext& dc) const
 
 
 // CImageProcessDoc 命令
+
+
+BOOL CImageProcessDoc::OnSaveDocument(LPCTSTR lpszPathName)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	cvSaveImage(CW2A(lpszPathName), pDst);
+	return TRUE;
+	//return CDocument::OnSaveDocument(lpszPathName);
+}
+
+
+BOOL CImageProcessDoc::OnOpenDocument(LPCTSTR lpszPathName)
+{
+	//if (!CDocument::OnOpenDocument(lpszPathName))
+		//return FALSE;
+
+	// TODO:  在此添加您专用的创建代码
+	pSrc = cvLoadImage(CW2A(lpszPathName));
+	pDst = cvCreateImage(cvGetSize(pSrc), 8, 3);
+	cvCopyImage(pSrc, pDst);
+
+	return pSrc != NULL;
+}
