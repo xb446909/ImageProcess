@@ -61,3 +61,10 @@ BOOL CThresholdApp::InitInstance()
 
 	return TRUE;
 }
+
+
+void GetNameInfo(char* name, char* info)
+{
+	strcpy(name, "二值化");
+	strcpy(info, "将图片进行二值化处理");
+}
