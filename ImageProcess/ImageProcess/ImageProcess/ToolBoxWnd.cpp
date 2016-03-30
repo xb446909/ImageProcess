@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "OutputWnd.h"
 #include "FlowView.h"
+#include "ToolBox.h"
 
 
 // CToolBoxWnd 对话框
@@ -56,12 +57,18 @@ BOOL CToolBoxWnd::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	// TODO:  在此添加额外的初始化
+	std::vector<pFlowItem>::iterator it;
 	HTREEITEM hRoot, hLelf;
 
 	hRoot = m_tree.InsertItem(L"图像处理");
 	hLelf = m_tree.InsertItem(L"二值化", hRoot);
 	hLelf = m_tree.InsertItem(L"边缘检测", hRoot);
 	hRoot = m_tree.InsertItem(L"计算");
+
+
+	hRoot = m_tree.GetRootItem();
+
+	//StrCmp(m_tree.GetItemText(hRoot), )
 
 
 	return TRUE;  // return TRUE unless you set the focus to a control

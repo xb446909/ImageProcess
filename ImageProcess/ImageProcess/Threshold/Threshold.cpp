@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "Threshold.h"
+#include "afxpropertygridctrl.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -39,6 +40,8 @@ BEGIN_MESSAGE_MAP(CThresholdApp, CWinApp)
 END_MESSAGE_MAP()
 
 
+UINT gID = 0;
+
 // CThresholdApp 构造
 
 CThresholdApp::CThresholdApp()
@@ -63,8 +66,26 @@ BOOL CThresholdApp::InitInstance()
 }
 
 
-void GetNameInfo(char* name, char* info)
+CMFCPropertyGridCtrl* CreateProperty(CWnd* pParent)
 {
-	strcpy(name, "二值化");
-	strcpy(info, "将图片进行二值化处理");
+	CMFCPropertyGridCtrl* pp = new CMFCPropertyGridCtrl();
+	CRect rect;
+	rect.SetRectEmpty();
+	if (!pp->Create(WS_VISIBLE | WS_CHILD, rect, pParent, gID++))
+	{
+		return NULL;
+	}
+}
+
+void ImageProc(void* src, void* dst, CMFCPropertyGridCtrl*)
+{
+
+}
+
+
+void GetNameAndInfo(char* groupName, char* name, char* info)
+{
+	strcpy_s(groupName, 64, "图像处理");
+	strcpy_s(name, 64, "二值化");
+	strcpy_s(info, 1024, "将图片进行二值化处理");
 }

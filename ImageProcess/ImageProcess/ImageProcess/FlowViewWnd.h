@@ -10,9 +10,11 @@ typedef struct flow_tag
 {
 
 #ifdef UNICODE
+	WCHAR groupName[64];
 	WCHAR flowName[64];
 	WCHAR info[1024];
 #else
+	CHAR groupName[64];
 	CHAR flowName[64];
 	CHAR info[1024];
 #endif

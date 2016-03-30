@@ -5,6 +5,8 @@
 #include "ToolBoxWnd.h"
 #include "FlowViewWnd.h"
 
+typedef void(*GetNameAndInfo)(char*, char*, char*);
+
 class CToolBox : public CDockablePane
 {
 	DECLARE_DYNAMIC(CToolBox)

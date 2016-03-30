@@ -13,7 +13,13 @@ IMPLEMENT_DYNAMIC(CToolBox, CDockablePane)
 
 CToolBox::CToolBox()
 {
+	char groupName[64];
+	char name[64];
+	char info[1024];
+
+	HINSTANCE hinstLib;
 	WIN32_FIND_DATA FindFileData;
+	GetNameAndInfo procGetNameAndInfo;
 	pFlowItem pItem = new FlowItem;
 	HANDLE hFind = ::FindFirstFile(L".\\Extensions\\*.dll", &FindFileData);
 	if (INVALID_HANDLE_VALUE == hFind)
@@ -25,7 +31,22 @@ CToolBox::CToolBox()
 	{
 		if (!(FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 		{
-			AfxMessageBox(FindFileData.cFileName);
+			hinstLib = LoadLibrary(FindFileData.cFileName);
+			if (hinstLib != NULL)
+			{
+				procGetNameAndInfo = (GetNameAndInfo)GetProcAddress(hinstLib, "GetNameAndInfo");
+
+				if (NULL != procGetNameAndInfo)
+				{
+					procGetNameAndInfo(groupName, name, info);
+					StrCpy(pItem->groupName, CA2W(groupName));
+					StrCpy(pItem->flowName, CA2W(name));
+					StrCpy(pItem->info, CA2W(info));
+				}
+				FreeLibrary(hinstLib);
+			}
+
+
 		}
 		if (!FindNextFile(hFind, &FindFileData))    break;
 	}
