@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Threshold.h"
 #include "afxpropertygridctrl.h"
+#include <vector>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -50,6 +51,11 @@ CThresholdApp::CThresholdApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
+CThresholdApp::~CThresholdApp()
+{
+
+}
+
 
 // 唯一的一个 CThresholdApp 对象
 
@@ -66,20 +72,37 @@ BOOL CThresholdApp::InitInstance()
 }
 
 
-CMFCPropertyGridCtrl* CreateProperty(CWnd* pParent)
+std::vector<CMFCPropertyGridProperty*>* GetProperties()
 {
-	CMFCPropertyGridCtrl* pp = new CMFCPropertyGridCtrl();
-	CRect rect;
-	rect.SetRectEmpty();
-	if (!pp->Create(WS_VISIBLE | WS_CHILD, rect, pParent, gID++))
-	{
-		return NULL;
-	}
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	std::vector<CMFCPropertyGridProperty*>* vec_prop = new std::vector<CMFCPropertyGridProperty*>;
+	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Appearance1"));
+	CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("Appearance2"));
+	CMFCPropertyGridProperty* pGroup3 = new CMFCPropertyGridProperty(_T("Appearance3"));
+
+
+	//pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("3D Look"), (_variant_t) false, _T("Specifies the window's font will be non-bold and controls will have a 3D border")));
+
+	//CMFCPropertyGridProperty* pProp = new CMFCPropertyGridProperty(_T("Border"), _T("Dialog Frame"), _T("One of: None, Thin, Resizable, or Dialog Frame"));
+	//pProp->AddOption(_T("None"));
+	//pProp->AddOption(_T("Thin"));
+	//pProp->AddOption(_T("Resizable"));
+	//pProp->AddOption(_T("Dialog Frame"));
+	//pProp->AllowEdit(FALSE);
+
+	//pGroup1->AddSubItem(pProp);
+	//pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("Caption"), (_variant_t) _T("About"), _T("Specifies the text that will be displayed in the window's title bar")));
+
+	//pp->AddProperty(pGroup1);
+	vec_prop->push_back(pGroup1);
+	vec_prop->push_back(pGroup2);
+	vec_prop->push_back(pGroup3);
+	return vec_prop;
 }
 
 void ImageProc(void* src, void* dst, CMFCPropertyGridCtrl*)
 {
-
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 }
 
 

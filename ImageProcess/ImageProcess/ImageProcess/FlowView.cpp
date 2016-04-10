@@ -2,6 +2,10 @@
 #include "FlowView.h"
 #include "Resource.h"
 #include "Strsafe.h"
+#include "PropertyView.h"
+#include "ToolBox.h"
+
+#pragma comment(lib, "..\\Debug\\Threshold.lib")
 
 CFlowView::CFlowView(void)
 {
@@ -76,17 +80,36 @@ void CFlowView::InsertFlow(LPCTSTR flowName, LPCTSTR info)
 {
 	POSITION pos = dlg.m_ProcList.GetFirstSelectedItemPosition();
 	int nItem = dlg.m_ProcList.GetNextSelectedItem(pos);
+	std::vector<pFlowItem>::iterator it;
 
-	pFlowItem pflow = new FlowItem;
-	StringCbCopy(pflow->flowName, 64, flowName);
-	StringCbCopy(pflow->info, 1024, info);
+	FlowItem flow;
+	StringCbCopy(flow.flowName, 64, flowName);
+	StringCbCopy(flow.info, 1024, info);
+	flow.pProperty = new CMFCPropertyGridCtrl();
+	CPropertyView::Get()->CreateProperty(flow.pProperty);
+
+	std::vector<CMFCPropertyGridProperty*>* vec_prop;
+
+	for (it = CToolBox::Get()->flowList.begin(); it != CToolBox::Get()->flowList.end(); it++)
+	{
+		if (StrCmp(((pFlowItem)*it)->flowName, flowName) == 0)
+		{
+			vec_prop = ((pFlowItem)*it)->funcGetProperties();
+			
+			for (auto it = vec_prop->begin(); it != vec_prop->end(); it++)
+			{
+				flow.pProperty->AddProperty(*it);
+			}
+		} 
+	}
+
 	if (nItem == -1)
 	{
-		dlg.vec_flow.push_back(pflow);
+		dlg.vec_flow.push_back(flow);
 	}
 	else
 	{
-		dlg.vec_flow.insert(dlg.vec_flow.begin() + nItem, pflow);
+		dlg.vec_flow.insert(dlg.vec_flow.begin() + nItem, flow);
 	}
 	dlg.UpdateList();
 }

@@ -20,7 +20,7 @@ CToolBox::CToolBox()
 	HINSTANCE hinstLib;
 	WIN32_FIND_DATA FindFileData;
 	GetNameAndInfo procGetNameAndInfo;
-	pFlowItem pItem = new FlowItem;
+	pFlowItem pItem;
 	HANDLE hFind = ::FindFirstFile(L".\\Extensions\\*.dll", &FindFileData);
 	if (INVALID_HANDLE_VALUE == hFind)
 	{
@@ -38,12 +38,17 @@ CToolBox::CToolBox()
 
 				if (NULL != procGetNameAndInfo)
 				{
+					pItem = new FlowItem;
 					procGetNameAndInfo(groupName, name, info);
 					StrCpy(pItem->groupName, CA2W(groupName));
 					StrCpy(pItem->flowName, CA2W(name));
 					StrCpy(pItem->info, CA2W(info));
+
+					pItem->funcGetProperties = (GetProperties)(GetProcAddress(hinstLib, "GetProperties"));
+					flowList.push_back(pItem);
 				}
-				FreeLibrary(hinstLib);
+				//FreeLibrary(hinstLib);
+				inst_list.push_back(hinstLib);
 			}
 
 
@@ -55,6 +60,11 @@ CToolBox::CToolBox()
 
 CToolBox::~CToolBox()
 {
+	while (!inst_list.empty())
+	{
+		FreeLibrary(inst_list.back());
+		inst_list.pop_back(); 
+	}
 }
 
 CToolBox* CToolBox::pInst = new CToolBox();

@@ -13,11 +13,11 @@
 // CThresholdApp
 // 有关此类实现的信息，请参阅 Threshold.cpp
 //
-
 class CThresholdApp : public CWinApp
 {
 public:
 	CThresholdApp();
+	~CThresholdApp();
 
 // 重写
 public:

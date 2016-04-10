@@ -6,6 +6,7 @@
 #include "FlowViewWnd.h"
 #include "afxdialogex.h"
 #include "OutputWnd.h"
+#include "PropertyView.h"
 
 
 // CFlowViewWnd 对话框
@@ -94,6 +95,10 @@ void CFlowViewWnd::OnNMClickListProc(NMHDR *pNMHDR, LRESULT *pResult)
 	CString str;
 	str.Format(L"单击了Item:%d", pNMItemActivate->iItem);
 	COutputWnd::Get()->OutputString(str);
+	if (pNMItemActivate->iItem != -1)
+	{
+		CPropertyView::Get()->ShowProperty(vec_flow[pNMItemActivate->iItem].pProperty);
+	}
 	*pResult = 0;
 }
 
@@ -143,13 +148,13 @@ void CFlowViewWnd::OnDelete()
 
 void CFlowViewWnd::UpdateList()
 {
-	std::vector<pFlowItem>::iterator it;
+	std::vector<FlowItem>::iterator it;
 	m_ProcList.SetRedraw(FALSE);
 	m_ProcList.DeleteAllItems();
 	for (it = vec_flow.begin(); it != vec_flow.end(); it++)
 	{
-		m_ProcList.InsertItem(m_ProcList.GetItemCount(), reinterpret_cast<pFlowItem>(*it)->flowName);
-		m_ProcList.SetItemText(m_ProcList.GetItemCount() - 1, 1, reinterpret_cast<pFlowItem>(*it)->info);
+		m_ProcList.InsertItem(m_ProcList.GetItemCount(), (*it).flowName);
+		m_ProcList.SetItemText(m_ProcList.GetItemCount() - 1, 1, (*it).info);
 	}
 	m_ProcList.SetRedraw(TRUE);
 }

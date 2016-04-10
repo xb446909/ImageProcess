@@ -60,15 +60,32 @@ BOOL CToolBoxWnd::OnInitDialog()
 	std::vector<pFlowItem>::iterator it;
 	HTREEITEM hRoot, hLelf;
 
-	hRoot = m_tree.InsertItem(L"图像处理");
-	hLelf = m_tree.InsertItem(L"二值化", hRoot);
-	hLelf = m_tree.InsertItem(L"边缘检测", hRoot);
-	hRoot = m_tree.InsertItem(L"计算");
+	//hRoot = m_tree.InsertItem(L"图像处理");
+	//hLelf = m_tree.InsertItem(L"二值化", hRoot);
+	//hLelf = m_tree.InsertItem(L"边缘检测", hRoot);
+	//hRoot = m_tree.InsertItem(L"计算");
 
-
-	hRoot = m_tree.GetRootItem();
-
-	//StrCmp(m_tree.GetItemText(hRoot), )
+	for (it = CToolBox::Get()->flowList.begin(); it != CToolBox::Get()->flowList.end(); it++)
+	{
+		hRoot = m_tree.GetRootItem();
+		while (hRoot != NULL)
+		{
+			if (StrCmp(((pFlowItem)*it)->groupName, m_tree.GetItemText(hRoot)) == 0)
+			{
+				m_tree.InsertItem(((pFlowItem)*it)->flowName, hRoot);
+				break;
+			}
+			else
+			{
+				hRoot = m_tree.GetNextItem(hRoot, TVGN_NEXT);
+			}
+		}
+		if (hRoot == NULL)
+		{
+			hRoot = m_tree.InsertItem(((pFlowItem)*it)->groupName);
+			m_tree.InsertItem(((pFlowItem)*it)->flowName, hRoot);
+		}
+	}
 
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -81,10 +98,17 @@ void CToolBoxWnd::OnNMDblclkTreeTools(NMHDR *pNMHDR, LRESULT *pResult)
 	// TODO: 在此添加控件通知处理程序代码
 	HTREEITEM hItem;
 	hItem = m_tree.GetSelectedItem();
-	
+	std::vector<pFlowItem>::iterator it;
+
 	if ((m_tree.GetChildItem(hItem) == NULL) && (m_tree.GetParentItem(hItem) != NULL))
 	{
-		CFlowView::Get()->InsertFlow(m_tree.GetItemText(hItem), m_tree.GetItemText(hItem));
+		for (it = CToolBox::Get()->flowList.begin(); it != CToolBox::Get()->flowList.end(); it++)
+		{
+			if (StrCmp(((pFlowItem)*it)->flowName, m_tree.GetItemText(hItem)) == 0)
+			{
+				CFlowView::Get()->InsertFlow(((pFlowItem)*it)->flowName, ((pFlowItem)*it)->info);
+			} 
+		}
 	}
 
 	*pResult = 0;

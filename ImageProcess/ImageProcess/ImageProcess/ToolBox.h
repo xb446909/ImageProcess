@@ -13,6 +13,9 @@ class CToolBox : public CDockablePane
 private:
 	static CToolBox* pInst;
 public:
+	std::vector<HINSTANCE> inst_list;
+
+public:
 	CToolBox();
 	virtual ~CToolBox();
 

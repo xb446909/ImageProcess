@@ -6,6 +6,8 @@
 #include <vector>
 // CFlowViewWnd ¶Ô»°¿ò
 
+typedef std::vector<CMFCPropertyGridProperty*>* (*GetProperties)();
+
 typedef struct flow_tag
 {
 
@@ -18,6 +20,9 @@ typedef struct flow_tag
 	CHAR flowName[64];
 	CHAR info[1024];
 #endif
+
+	GetProperties funcGetProperties;
+	CMFCPropertyGridCtrl* pProperty;
 
 }FlowItem, *pFlowItem;
 
@@ -47,6 +52,6 @@ public:
 	afx_msg void OnDelete();
 	void UpdateList();
 
-	std::vector<pFlowItem> vec_flow;
+	std::vector<FlowItem> vec_flow;
 
 };

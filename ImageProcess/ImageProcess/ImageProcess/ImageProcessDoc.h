@@ -29,8 +29,8 @@ public:
 public:
 	virtual ~CImageProcessDoc();
 
-	IplImage* pSrc = NULL;
-	IplImage* pDst = NULL;
+	IplImage* pSrc;
+	IplImage* pDst;
 
 #ifdef _DEBUG
 	virtual void AssertValid() const;
